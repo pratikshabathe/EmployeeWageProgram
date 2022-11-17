@@ -4,23 +4,32 @@ import java.util.Random;
 
 public class EmpWageProgram{
 
-	public static void main(String[] args) {
-	    System.out.println("--Welcome to Employee Wage Computation Program--\n");
+		public static void main(String[] args) {
+			
+		
+	 System.out.println("--Welcome to Employee Wage Computation Program--\n");
 
 	    String attendanceString = EmpWageProgram.checkAttendance();
 	    System.out.println(attendanceString);
 
-	    System.out.println("Employee's today's wage: " + getDailyWage(attendanceString) + "$");
+	    System.out.println("Employee's today's wage: " + getDailyWage(attendanceString));
 
-	  }
+}
 
 	  private static String checkAttendance() {
 	    Random random = new Random();
 	    int randomNum = random.nextInt();
 
-	    if (randomNum == 1) return "employee is present full time.";
-	    else if (randomNum == 2) return "employee is present part time.";
-	    else return "employee is absent.";
+	    switch (randomNum) {
+	      case 1:
+	        return "employee is present full time";
+
+	      case 2:
+	        return "employee is present part time";
+
+	      default:
+	        return "employee is absent";
+	    }
 
 	  }
 
@@ -28,7 +37,7 @@ public class EmpWageProgram{
 
 	   Byte empRatePerHr = 20;
 	   Byte hrsWorked = 0;
-	   Byte fullTimeHrs = 8;   //
+	   Byte fullTimeHrs = 8;   //assumed
 	   Byte partTimeHrs = 4;   //assumed
 
 	   if (str.contains("full time")) hrsWorked = fullTimeHrs;
@@ -36,5 +45,6 @@ public class EmpWageProgram{
 
 	   int dailyWage = empRatePerHr * hrsWorked;
 	   return dailyWage;
+
 	  }
 }
