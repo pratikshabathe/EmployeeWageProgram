@@ -9,9 +9,12 @@ public class EmpWageProgram{
 	  private static Byte partTimeHrs = 4;
 
 	  public static void main(String[] args) {
-	    System.out.println("--Welcome to Employee Wage Computation Program--\n");
-
-	    System.out.println("Employee's wage for this month: " + getMonthlyWage() + "$");
+		  
+	   // System.out.println("--Welcome to Employee Wage Computation Program--\n");
+		  
+		  EmpWageProgram empwage = new EmpWageProgram();
+		  empwage.getMonthlyWage();
+	    System.out.println("Employee's wage for this month: ");
 
 	  }
 
@@ -72,5 +75,5 @@ public class EmpWageProgram{
 	    monthlyWage= hoursWorked * EmpWageProgram.empRatePerHr;
 
 	    return monthlyWage;
-	  }
+	    }
 }
