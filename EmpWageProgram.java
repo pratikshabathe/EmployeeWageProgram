@@ -3,77 +3,92 @@ package com.blz.empwage;
 import java.util.Random;
 
 public class EmpWageProgram{
+	
+	public static void main(String[] args) {
+		
+		EmpWageProgram empwage = new EmpWageProgram();
+		empwage.checkAttendance();
+		empwage.getDailyWage();
+		empwage.getMonthlyWage();
+		
+	}
+	
+	  final short EMP_WAGE_PER_HOUR = 20;
+	  final byte FULL_TIME_HRS = 8;
+	  final byte PART_TIME_HRS = 4;
+	  final byte HRS_TO_WORK = 100;
+	  final byte DAYS_TO_WORK = 20;
 
-	private static Byte empRatePerHr = 20;    //declaring the constants
-	  private static Byte fullTimeHrs = 8;
-	  private static Byte partTimeHrs = 4;
+	  short monthlyWage;
+	  short hrsWorked;
 
-	  public static void main(String[] args) {
-		  
-	   // System.out.println("--Welcome to Employee Wage Computation Program--\n");
-		  
-		  EmpWageProgram empwage = new EmpWageProgram();
-		  empwage.getMonthlyWage();
-	    System.out.println("Employee's wage for this month: ");
 
-	  }
-
-	  private static String checkAttendance() {
+	  public String checkAttendance() {
 	    Random random = new Random();
 	    int randomNum = random.nextInt();
 
 	    switch (randomNum) {
+	      case 0:
+	        return "absent";
 	      case 1:
-	        return "employee is present full time";
-
+	        return "present full time";
 	      case 2:
-	        return "employee is present part time";
+	        return "present part time";
 
 	      default:
-	        return "employee is absent";
+	        return "Invalid.";
 	    }
 
 	  }
 
-	  private static int getDailyWage() {
+	  public short getDailyWage() {
+	    String attendaceStr = checkAttendance();
 
-	   Byte hrsWorked = 0;
-	   String str = checkAttendance();
+	    switch (attendaceStr) {
+	      case "present part time":
+	        hrsWorked = PART_TIME_HRS;
+	        break;
 
-	   if (str.contains("full time")) hrsWorked = EmpWageProgram.fullTimeHrs;
-	   else if (str.contains("part time")) hrsWorked = EmpWageProgram.partTimeHrs;
+	      case "present full time":
+	        hrsWorked = FULL_TIME_HRS;
+	        break;
 
-	   int dailyWage = EmpWageProgram.empRatePerHr * hrsWorked;
-	   return dailyWage;
-	 }
+	    }
 
+	    short dailyWage = (short) (EMP_WAGE_PER_HOUR * hrsWorked);
 
-	  private static int getMonthlyWage() {
-	    int monthlyWage = 0;
+	    return dailyWage;
+
+	  }
+
+	  public short getMonthlyWage() {
+	    short hrsWorked = 0;
 	    short daysWorked = 0;
-	    short hoursWorked = 0;
 
-	    while (daysWorked < 20 && hoursWorked < 100) {
-	      int dailyWage = getDailyWage(); //getting employee's daily wage for each day
+	    System.out.print("Employee's daily wage: ");
 
-	      String str = (dailyWage == 0) ? "absent" : dailyWage / EmpWageProgram.empRatePerHr == EmpWageProgram.fullTimeHrs ? "full time" : "part time";
+	    do {
+	      short dailyWage = getDailyWage(); //getting employee's daily wage for each day
+	      System.out.print(dailyWage + " ");
+	      monthlyWage += dailyWage;
+
+	      String str = (dailyWage == 0) ? "absent" : dailyWage / EMP_WAGE_PER_HOUR == FULL_TIME_HRS ? "full time" : "part time";
 
 	      switch (str) {
 	        case "full time":
-	          hoursWorked += 8;
+	          hrsWorked += 8;
 	          daysWorked++;
 	          break;
 	        case "part time":
-	          hoursWorked += 4;
+	          hrsWorked += 4;
 	          daysWorked++;
 	          break;
 	      }
-	    }
 
-	    System.out.println("Employee has worked " + hoursWorked + " hours in "+daysWorked +" days this month.\n");
+	    } while (daysWorked < DAYS_TO_WORK && hrsWorked < HRS_TO_WORK);
 
-	    monthlyWage= hoursWorked * EmpWageProgram.empRatePerHr;
+	    System.out.println("\nEmployee has worked " + hrsWorked + " hours in " + daysWorked + " days this month.");
 
 	    return monthlyWage;
-	    }
+    }
 }
